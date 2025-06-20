@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment {
-        registry = "public.ecr.aws/x9t5d3j0/petdemo"
+        registry = "public.ecr.aws/u7z2y9i0/petdemo:latest"
     }
    
     stages {
         stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/saamrajepatil/spring-petclinic']]])     
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/Shraddha2457/spring-petclinic.git']]])     
             }
         }
       stage ('Build') {
@@ -22,7 +22,7 @@ pipeline {
       steps{
         script {
           sh 'docker build -t petdemo .'
-          sh 'docker tag petdemo:latest public.ecr.aws/x9t5d3j0/petdemo:latest'
+          sh 'docker tag petdemo:latest public.ecr.aws/u7z2y9i0/petdemo:latest'
         }
       }
     }
@@ -32,7 +32,7 @@ pipeline {
      steps{  
          script {
                 sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/x9t5d3j0'
-                sh 'docker push public.ecr.aws/x9t5d3j0/petdemo:latest'
+                sh 'docker push public.ecr.aws/u7z2y9i0/petdemo:latest'
          }
         }
       }
