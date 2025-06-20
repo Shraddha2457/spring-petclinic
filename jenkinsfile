@@ -42,7 +42,7 @@ pipeline {
             script {
                 withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-1', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://5B7DD3FA037CB5EF3D2423244FC6335E.sk1.ap-south-1.eks.amazonaws.com']]) {
                     sh "kubectl apply -f eks-deploy-k8s.yaml"
-                    sleep6
+                    sleep60
                      sh "kubectl get svc -n webapps"
                 }
             }
